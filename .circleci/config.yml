@@ -92,6 +92,11 @@ jobs:
                 description: Version of trivy to download
                 type: string
         steps:
+            - checkout
+            - setup_remote_docker
+            - run:
+              name: Build image
+              command: docker build -t trivy-test:1.0.0 ../githubCircle
             - scan:
                 args: << parameters.args >>
                 version: << parameters.version >>
@@ -105,4 +110,4 @@ workflows:
   use-my-orb:
     jobs:
       - trivy/scan:
-          args: '--no-progress --exit-code 1 image busybox'
+          args: '--no-progress --exit-code 1 image trivy-test:1.0.0'
