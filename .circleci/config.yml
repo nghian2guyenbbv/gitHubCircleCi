@@ -96,7 +96,7 @@ jobs:
             - setup_remote_docker
             - run:
               name: Build image
-              command: docker build -t trivy-test:1.0.0 ../githubCircle
+              command: docker build -t trivy-test:1.0.0 .././githubCircle
             - scan:
                 args: << parameters.args >>
                 version: << parameters.version >>
