@@ -6,7 +6,7 @@ description: |
 display:
     source_url: https://github.com/15five/trivy-orb
 orbs:
-  trivy-orb: fifteen5/trivy-orb@1.0.0
+  trivy: fifteen5/trivy-orb@1.0.0
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
