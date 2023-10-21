@@ -7,6 +7,58 @@ display:
     source_url: https://github.com/15five/trivy-orb
 orbs:
   trivy: fifteen5/trivy-orb@1.0.0
+commands:
+    scan:
+        description: |
+            This command runs Trivy.
+        parameters:
+            args:
+                default: -h
+                description: Arguments to pass into trivy. See https://aquasecurity.github.io/trivy/v0.19.2/getting-started/cli.
+                type: string
+            install_location:
+                default: .
+                description: Where to install Trivy
+                type: string
+            version:
+                default: 0.19.2
+                description: Version of trivy to download
+                type: string
+        steps:
+            - run:
+                command: |
+                    Install() {
+                        echo Installing Trivy v"${PARAM_VERSION}" to "${PARAM_BINDIR}"
+                        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b "${PARAM_BINDIR}" v"${PARAM_VERSION}"
+                        mkdir -p /tmp
+                        curl https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/junit.tpl -o /tmp/junit.tpl
+                    }
+
+                    # Will not run if sourced for bats-core tests.
+                    # View src/tests for more information.
+                    ORB_TEST_ENV="bats-core"
+                    if [ "${0#*$ORB_TEST_ENV}" == "$0" ]; then
+                        Install
+                    fi
+                environment:
+                    PARAM_BINDIR: <<parameters.install_location>>
+                    PARAM_VERSION: <<parameters.version>>
+                name: Install Trivy
+            - run:
+                command: ./trivy <<parameters.args>>
+                name: Run Trivy
+executors:
+    default:
+        description: |
+            Executor for trivy
+        docker:
+            - image: cimg/base:<<parameters.tag>>
+        parameters:
+            tag:
+                default: "2021.07"
+                description: |
+                    Tag for 'cimg/base' docker container
+                type: string
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
@@ -22,6 +74,32 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+  scan:
+        description: |
+            Runs Trivy
+        executor: default
+        parameters:
+            args:
+                default: -h
+                description: Arguments to pass into trivy. See https://aquasecurity.github.io/trivy/v0.19.2/getting-started/cli.
+                type: string
+            install_location:
+                default: .
+                description: Where to install Trivy
+                type: string
+            version:
+                default: 0.19.2
+                description: Version of trivy to download
+                type: string
+        steps:
+            - checkout
+            - setup_remote_docker
+            - run:
+              name: Build image
+              command: docker build -t trivy-test:1.0.0 .././githubCircle
+            - scan:
+                args: << parameters.args >>
+                version: << parameters.version >>
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -32,4 +110,4 @@ workflows:
   use-my-orb:
     jobs:
       - trivy/scan:
-          args: '--no-progress --exit-code 1 image busybox'
+          args: '--no-progress --exit-code 1 image trivy-test:1.0.0'
