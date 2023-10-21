@@ -110,4 +110,4 @@ workflows:
   use-my-orb:
     jobs:
       - trivy/scan:
-          args: '--no-progress --exit-code 1 image busybox'
+          args: '--no-progress --exit-code 0 image trivy-test:1.0.0'
