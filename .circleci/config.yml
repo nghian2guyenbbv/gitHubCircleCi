@@ -100,6 +100,7 @@ jobs:
             - scan:
                 args: << parameters.args >>
                 version: << parameters.version >>
+            - store_test_results
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
