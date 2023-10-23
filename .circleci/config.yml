@@ -26,7 +26,6 @@ commands:
                 type: string
         steps:
             - checkout
-            - setup_remote_docker
             - run:
                 name: Build image
                 command: docker build -t trivy-ci-test:${CIRCLE_SHA1} .
