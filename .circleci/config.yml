@@ -25,28 +25,20 @@ commands:
                 description: Version of trivy to download
                 type: string
         steps:
+            - checkout
+            - setup_remote_docker
             - run:
+                name: Build image
+                command: docker build -t trivy-ci-test:${CIRCLE_SHA1} .
+            - run:
+                name: Install trivy
                 command: |
-                    Install() {
-                        echo Installing Trivy v"${PARAM_VERSION}" to "${PARAM_BINDIR}"
-                        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b "${PARAM_BINDIR}" v"${PARAM_VERSION}"
-                        mkdir -p /tmp
-                        curl https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/junit.tpl -o /tmp/junit.tpl
-                    }
-
-                    # Will not run if sourced for bats-core tests.
-                    # View src/tests for more information.
-                    ORB_TEST_ENV="bats-core"
-                    if [ "${0#*$ORB_TEST_ENV}" == "$0" ]; then
-                        Install
-                    fi
-                environment:
-                    PARAM_BINDIR: <<parameters.install_location>>
-                    PARAM_VERSION: <<parameters.version>>
-                name: Install Trivy
+                    apk add --update-cache --upgrade curl
+                    curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
             - run:
-                command: ./trivy <<parameters.args>>
-                name: Run Trivy
+                name: Scan the local image with trivy
+                command: trivy repo --exit-code 0 --no-progress https://github.com/nghian2guyenbbv/gitHubCircleCi
+
 executors:
     default:
         description: |
