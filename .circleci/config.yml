@@ -1,48 +1,7 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
-description: |
-    Orb for running Trivy, a security scanner
-commands:
-    scan:
-        description: |
-            This command runs Trivy.
-        parameters:
-            args:
-                default: -h
-                description: Arguments to pass into trivy. See https://aquasecurity.github.io/trivy/v0.19.2/getting-started/cli.
-                type: string
-            install_location:
-                default: .
-                description: Where to install Trivy
-                type: string
-            version:
-                default: 0.19.2
-                description: Version of trivy to download
-                type: string
-        steps:
-            - checkout
-            - run:
-                name: Install trivyy
-                command: |
-                    apk add --update-cache --upgrade curl
-                    curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
-            - run:
-                name: Scan the local image with trivy
-                command: trivy repo --branch master --exit-code 0 --no-progress https://github.com/nghian2guyenbbv/gitHubCircleCii
 
-executors:
-    default:
-        description: |
-            Executor for trivy
-        docker:
-            - image: docker:stable-git
-        parameters:
-            tag:
-                default: "2021.07"
-                description: |
-                    Tag for 'cimg/base' docker container
-                type: string
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
@@ -58,37 +17,10 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-  scan:
-        description: |
-            Runs Trivy
-        executor: default
-        parameters:
-            args:
-                default: -h
-                description: Arguments to pass into trivy. See https://aquasecurity.github.io/trivy/v0.19.2/getting-started/cli.
-                type: string
-            install_location:
-                default: .
-                description: Where to install Trivy
-                type: string
-            version:
-                default: 0.19.2
-                description: Version of trivy to download
-                type: string
-        steps:
-            - checkout
-            - setup_remote_docker
-            - run:
-                name: Build image
-                command: docker build -t trivy-test:1.1.0 .././githubCircle
-            - scan:
-                args: << parameters.args >>
-                version: << parameters.version >>
-            - store_test_results
+
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  use-my-orb:
+  say-hello-workflow:
     jobs:
-      - scan:
-          args: '--no-progress --exit-code 0 repo -f table -o trivy-results.sarif https://github.com/nghian2guyenbbv/gitHubCircleCi'
+      - say-hello
