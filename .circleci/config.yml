@@ -27,9 +27,6 @@ commands:
         steps:
             - checkout
             - run:
-                name: Build image
-                command: docker build -t trivy-ci-test:1.0.0 .././githubCircle
-            - run:
                 name: Install trivyy
                 command: |
                     apk add --update-cache --upgrade curl
