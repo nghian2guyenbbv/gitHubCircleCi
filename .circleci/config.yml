@@ -112,4 +112,4 @@ workflows:
   use-my-orb:
     jobs:
       - trivy/scan:
-          args: '--no-progress --exit-code 0 repo -f table -o trivy-results.sarif https://github.com/nghian2guyenbbv/gitHubCircleCi'
+          args: '--no-progress --exit-code 0 repo -f table -o trivy-results.sarif .././githubCircle'
