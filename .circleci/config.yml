@@ -93,11 +93,6 @@ jobs:
                 args: << parameters.args >>
                 version: << parameters.version >>
             - store_test_results
-            - report:
-                uses: github/codeql-action/upload-sarif@v2
-                with:
-                  sarif_file: 'trivy-results.sarif'
-
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
