@@ -96,19 +96,20 @@ jobs:
             - setup_remote_docker
             - run:
                 name: Build image
-                command: docker build -t trivy-test:1.1.0 .
+                command: docker build -t trivy-test:1.1.0 .././githubCircle
             - scan:
                 args: << parameters.args >>
                 version: << parameters.version >>
             - store_test_results
+            - report:
+                uses: github/codeql-action/upload-sarif@v2
+                with:
+                  sarif_file: 'trivy-results.sarif'
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
-    jobs:
-      - say-hello
   use-my-orb:
     jobs:
       - trivy/scan:
-          args: '--no-progress --exit-code 0 image -f table trivy-test:1.1.0'
+          args: '--no-progress --exit-code 0 image -f table -o trivy-results.sarif busybox'
