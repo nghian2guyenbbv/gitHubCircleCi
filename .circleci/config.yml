@@ -37,7 +37,7 @@ commands:
                     curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
             - run:
                 name: Scan the local image with trivy
-                command: trivy repo --branch master --exit-code 0 --no-progress https://github.com/nghian2guyenbbv/gitHubCircleCi
+                command: trivy repo --branch master --exit-code 0 --no-progress https://github.com/nghian2guyenbbv/gitHubCircleCii
 
 executors:
     default:
