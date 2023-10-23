@@ -24,6 +24,8 @@ commands:
                 default: 0.19.2
                 description: Version of trivy to download
                 type: string
+        docker:
+            - image: docker:stable-git
         steps:
             - checkout
             - setup_remote_docker
@@ -31,10 +33,10 @@ commands:
                 name: Build image
                 command: docker build -t trivy-ci-test:${CIRCLE_SHA1} .
             - run:
-                name: Install trivy
+                name: Install trivyy
                 command: |
                     apk add --update-cache --upgrade curl
-                    curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+                    curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/binn
             - run:
                 name: Scan the local image with trivy
                 command: trivy repo --branch master --exit-code 0 --no-progress https://github.com/nghian2guyenbbv/gitHubCircleCii
