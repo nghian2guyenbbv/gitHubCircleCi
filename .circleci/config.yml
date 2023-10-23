@@ -111,4 +111,4 @@ workflows:
   use-my-orb:
     jobs:
       - trivy/scan:
-          args: '--no-progress --exit-code 0 image -f table -o ./trivy-result.txt nghiashinhan96/trivy-test:1.0.0'
+          args: '--no-progress --exit-code 0 image -f table nghiashinhan96/trivy-test:1.0.0'
