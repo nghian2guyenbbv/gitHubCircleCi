@@ -96,7 +96,7 @@ jobs:
             - setup_remote_docker
             - run:
                 name: Build image
-                command: docker build -t trivy-test:1.0.0 .././githubCircle
+                command: docker build -t trivy-test:1.1.0 .
             - scan:
                 args: << parameters.args >>
                 version: << parameters.version >>
@@ -111,4 +111,4 @@ workflows:
   use-my-orb:
     jobs:
       - trivy/scan:
-          args: '--no-progress --exit-code 0 image -f table nghiashinhan96/trivy-test:1.0.0'
+          args: '--no-progress --exit-code 0 image -f table trivy-test:1.1.0'
