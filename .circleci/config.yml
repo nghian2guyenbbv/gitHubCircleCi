@@ -17,9 +17,11 @@ jobs:
             apk add --update-cache --upgrade curl
             curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
       - run:
-          name: Scan the local image with trivy
-          command: trivy repo --exit-code 0 --no-progress ./
-
+          name: Scan the local repositories with trivy
+          command: trivy repo --exit-code 0 --no-progress --output trivy_scan.json ./
+    artifacts:
+      paths: 
+        - trivy_scan.json
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
