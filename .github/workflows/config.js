@@ -8,8 +8,7 @@ module.exports = {
   gitAuthor: "nghian2nguyenbbv <nghiashinhan96@gmail.com>",
   baseBranches: ["master"],
   platformAutomerge: false,
-  dependencyDashboard: true,
   branchPrefix: "renovate/",
-  dependencyDashboardTitle: "Dependency Dashboard Renovate",
-  dependencyDashboardApproval: true
+  dependencyDashboard: true,
+  dependencyDashboardTitle: "Dependency Dashboard Renovate"
 };
