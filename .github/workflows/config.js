@@ -10,7 +10,7 @@ module.exports = {
   platformAutomerge: false,
   dependencyDashboard: true,
   dependencyDashboardTitle: "Dependency Dashboard Renovate",
-  dependencyDashboardApproval: true,
+  dependencyDashboardApproval: false,
   branchPrefix: "renovate/"
   
 };
