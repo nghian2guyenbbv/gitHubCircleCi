@@ -4,10 +4,10 @@ module.exports = {
   automergeType: "pr", 
   onboarding: true,
   "extends": ["github>renovatebot/.github"],
-  repositories: ['nghian2guyenbbv/renovateCircleCiLocal'],
+  repositories: ['nghian2guyenbbv/gitHubCircleCi'],
   gitAuthor: "nghian2nguyenbbv <nghiashinhan96@gmail.com>",
   baseBranches: ["master"],
-  "platformAutomerge": false,
-  "dependencyDashboard": true,
+  platformAutomerge: false,
+  dependencyDashboard: true,
   "branchPrefix": "renovate/",
 };
