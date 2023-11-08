@@ -9,7 +9,7 @@ module.exports = {
   baseBranches: ["master"],
   platformAutomerge: false,
   dependencyDashboard: true,
-  dependencyDashboardTitle: "Dependency Dashboard Renovate",
+  dependencyDashboardTitle: "Dependency Dashboard Renovate Approved",
   dependencyDashboardApproval: false,
   branchPrefix: "renovate/"
   
