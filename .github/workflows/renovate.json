@@ -1,5 +1,5 @@
 {
-    "branchPrefix": "master/",
+    "branchPrefix": "renovate/",
     "dependencyDashboardTitle": "Dependency Dashboard Renovate",
     "dryRun": "full",
     "gitAuthor": "nghian2nguyenbbv <nghiashinhan96@gmail.com>",
