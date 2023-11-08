@@ -1,5 +1,4 @@
 module.exports = {
-  token:"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", 
   platform: 'github',
   logLevel: 'info',
   automergeType: "pr", 
